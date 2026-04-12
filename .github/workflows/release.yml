@@ -1,0 +1,85 @@
+name: release
+
+on:
+  release:
+    types:
+      - published
+
+permissions:
+  contents: write
+
+jobs:
+  build-and-upload:
+    runs-on: ubuntu-latest
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - goos: darwin
+            goarch: amd64
+            archive: tar.gz
+          - goos: darwin
+            goarch: arm64
+            archive: tar.gz
+          - goos: linux
+            goarch: amd64
+            archive: tar.gz
+          - goos: linux
+            goarch: arm64
+            archive: tar.gz
+          - goos: windows
+            goarch: amd64
+            archive: zip
+          - goos: windows
+            goarch: arm64
+            archive: zip
+
+    steps:
+      - name: Check out repository
+        uses: actions/checkout@v4
+
+      - name: Set up Go
+        uses: actions/setup-go@v5
+        with:
+          go-version-file: go.mod
+
+      - name: Build artifact
+        env:
+          BINARY_NAME: gheese
+          GOOS: ${{ matrix.goos }}
+          GOARCH: ${{ matrix.goarch }}
+          ARCHIVE_TYPE: ${{ matrix.archive }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: |
+          set -euo pipefail
+
+          version="${RELEASE_TAG#v}"
+          staging_dir="dist/${GOOS}_${GOARCH}"
+          mkdir -p "${staging_dir}"
+
+          binary_name="${BINARY_NAME}"
+          if [ "${GOOS}" = "windows" ]; then
+            binary_name="${binary_name}.exe"
+          fi
+
+          CGO_ENABLED=0 go build -trimpath -ldflags="-s -w" -o "${staging_dir}/${binary_name}" .
+
+          asset_base="${BINARY_NAME}_${version}_${GOOS}_${GOARCH}"
+          if [ "${ARCHIVE_TYPE}" = "zip" ]; then
+            asset_path="dist/${asset_base}.zip"
+            (
+              cd "${staging_dir}"
+              zip -q "../${asset_base}.zip" "${binary_name}"
+            )
+          else
+            asset_path="dist/${asset_base}.tar.gz"
+            tar -C "${staging_dir}" -czf "${asset_path}" "${binary_name}"
+          fi
+
+          echo "ASSET_PATH=${asset_path}" >> "${GITHUB_ENV}"
+
+      - name: Upload artifact to release
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          RELEASE_TAG: ${{ github.event.release.tag_name }}
+        run: gh release upload "${RELEASE_TAG}" "${ASSET_PATH}" --clobber
