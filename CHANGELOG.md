@@ -1,5 +1,12 @@
 # Changelog
 
+## [0.3.0](https://github.com/dev-soprasteriano/gheese/compare/gheese-v0.2.1...gheese-v0.3.0) (2026-04-13)
+
+
+### Features
+
+* **repo:** filter by visibility ([27dd39b](https://github.com/dev-soprasteriano/gheese/commit/27dd39b86ace4f606a508cdcab5da057bde7a5ac))
+
 ## [0.2.1](https://github.com/dev-soprasteriano/gheese/compare/gheese-v0.2.0...gheese-v0.2.1) (2026-04-13)
 
 
