@@ -33,6 +33,15 @@ Lists the repositories in an organization that the authenticated user can see.
 ./gheese repo list my-organization
 ```
 
+Filter by visibility:
+
+```bash
+./gheese repo list my-organization --visibility public
+./gheese repo list my-organization --visibility private
+```
+
+`--visibility` accepts `all`, `public`, or `private`. If you do not set it, the command lists all visible repositories.
+
 ### `repo move`
 
 Transfers a repository to another organization.

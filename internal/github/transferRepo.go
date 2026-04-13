@@ -32,7 +32,7 @@ func TransferRepo(c *github.Client, sourceOwner, sourceRepo, destOwner string, n
 }
 
 func TransferMultipleRepo(c *github.Client, sourceOwner, destOwner string, teamId []int64) (*BatchTransferResult, error) {
-	allRepo, err := ListRepos(c, sourceOwner)
+	allRepo, err := ListRepos(c, sourceOwner, "all")
 	if err != nil {
 		return nil, err
 	}
