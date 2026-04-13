@@ -12,7 +12,6 @@ import (
 	"github.com/spf13/cobra"
 )
 
-// moveCmd represents the move command
 var moveCmd = &cobra.Command{
 	Use:   "move",
 	Short: "Transfer repositories to another organization.",
@@ -99,17 +98,7 @@ func init() {
 	moveCmd.Flags().StringP("DestinationOrganization", "O", "", "Which organization will you transfer the repo to?")
 	moveCmd.Flags().StringP("DestinationRepository", "R", "", "What do you want to name the repo after the transfer?")
 	moveCmd.Flags().Int64SliceP("TeamId", "t", nil, "ID of team or teams to add to the repository")
-
 	moveCmd.Flags().BoolP("All", "A", false, "This will move all the repositories for the organization.")
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// moveCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// moveCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
 }
 
 func printBatchTransferResult(result *github.BatchTransferResult) {
