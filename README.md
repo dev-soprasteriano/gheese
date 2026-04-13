@@ -80,3 +80,13 @@ What it does:
 - The tool only works against repositories visible to the authenticated user.
 - Repository transfers depend on the permissions and rules enforced by GitHub.
 - Releases are built for macOS, Linux, and Windows through GitHub Actions.
+
+## Contributing
+
+This repository uses the **Developer Certificate of Origin (DCO)**. By contributing, you agree to the terms in [`DCO`](./DCO).
+
+Sign off commits with:
+
+```bash
+git commit -s
+```
