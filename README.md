@@ -1,0 +1,82 @@
+# gheese
+
+`gheese` is a Go CLI from **Sopra Steria AS** for working with GitHub repositories from the command line.
+
+## Requirements
+
+- Go installed locally if you want to build from source
+- A GitHub personal access token available as `GITHUB_TOKEN`
+
+```bash
+export GITHUB_TOKEN=your-token
+```
+
+On Windows PowerShell:
+
+```powershell
+$env:GITHUB_TOKEN="your-token"
+```
+
+## Build
+
+```bash
+go build -o gheese .
+```
+
+## Commands
+
+### `repo list`
+
+Lists the repositories in an organization that the authenticated user can see.
+
+```bash
+./gheese repo list my-organization
+```
+
+### `repo move`
+
+Transfers a repository to another organization.
+
+Example:
+
+```bash
+./gheese repo move \
+  -o source-org \
+  -r source-repo \
+  -O destination-org \
+  -R destination-repo
+```
+
+Useful flags:
+
+| Flag | Meaning |
+| --- | --- |
+| `-o`, `--SourceOrganization` | Source organization |
+| `-r`, `--SourceRepository` | Source repository |
+| `-O`, `--DestinationOrganization` | Destination organization |
+| `-R`, `--DestinationRepository` | Repository name after transfer |
+| `-t`, `--TeamId` | Team IDs to add to the repository |
+
+### `repo move --All`
+
+Walks through all repositories in a source organization and asks for confirmation before each transfer.
+
+```bash
+./gheese repo move \
+  -o source-org \
+  -O destination-org \
+  -A
+```
+
+What it does:
+
+- lists repositories in the source organization
+- prompts `y/n` for each repository
+- requests a transfer for each repository you approve
+- prints how many repositories were processed and how many transfer requests were made
+
+## Notes
+
+- The tool only works against repositories visible to the authenticated user.
+- Repository transfers depend on the permissions and rules enforced by GitHub.
+- Releases are built for macOS, Linux, and Windows through GitHub Actions.
