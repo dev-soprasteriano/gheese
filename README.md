@@ -23,6 +23,45 @@ $env:GITHUB_TOKEN="your-token"
 go build -o gheese .
 ```
 
+## Install from a release
+
+Each GitHub release includes prebuilt artifacts named like:
+
+- `gheese_<version>_darwin_amd64.tar.gz`
+- `gheese_<version>_darwin_arm64.tar.gz`
+- `gheese_<version>_linux_amd64.tar.gz`
+- `gheese_<version>_linux_arm64.tar.gz`
+- `gheese_<version>_windows_amd64.zip`
+- `gheese_<version>_windows_arm64.zip`
+
+Replace `<version>` below with the release version you want, without the leading `v`.
+
+### macOS and Linux
+
+Download the matching archive, extract it, and move the binary somewhere on your `PATH`:
+
+```bash
+curl -LO https://github.com/<owner>/<repo>/releases/download/v<version>/gheese_<version>_linux_amd64.tar.gz
+tar -xzf gheese_<version>_linux_amd64.tar.gz
+chmod +x gheese
+sudo mv gheese /usr/local/bin/gheese
+```
+
+For macOS, use the matching `darwin` archive instead of `linux`. For Apple Silicon, use the `arm64` artifact.
+
+### Windows
+
+Download the matching `.zip` asset from the release page, extract `gheese.exe`, and place it in a directory on your `PATH`.
+
+In PowerShell:
+
+```powershell
+Invoke-WebRequest -OutFile gheese.zip https://github.com/<owner>/<repo>/releases/download/v<version>/gheese_<version>_windows_amd64.zip
+Expand-Archive gheese.zip -DestinationPath .
+```
+
+After extraction, move `gheese.exe` to a folder that is included in `PATH`.
+
 ## Commands
 
 ### `repo list`
