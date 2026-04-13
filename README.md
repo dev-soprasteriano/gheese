@@ -34,15 +34,14 @@ Each GitHub release includes prebuilt artifacts named like:
 - `gheese_<version>_windows_amd64.zip`
 - `gheese_<version>_windows_arm64.zip`
 
-Replace `<version>` below with the release version you want, without the leading `v`.
-
 ### macOS and Linux
 
-Download the matching archive, extract it, and move the binary somewhere on your `PATH`:
+Resolve the latest release tag, download the matching archive, extract it, and move the binary somewhere on your `PATH`:
 
 ```bash
-curl -LO https://github.com/<owner>/<repo>/releases/download/v<version>/gheese_<version>_linux_amd64.tar.gz
-tar -xzf gheese_<version>_linux_amd64.tar.gz
+VERSION="$(curl -fsSL https://api.github.com/repos/dev-soprasteriano/gheese/releases/latest | grep '"tag_name"' | sed -E 's/.*"v?([^"]+)".*/\1/')"
+curl -fLO "https://github.com/dev-soprasteriano/gheese/releases/download/v${VERSION}/gheese_${VERSION}_linux_amd64.tar.gz"
+tar -xzf "gheese_${VERSION}_linux_amd64.tar.gz"
 chmod +x gheese
 sudo mv gheese /usr/local/bin/gheese
 ```
@@ -56,7 +55,8 @@ Download the matching `.zip` asset from the release page, extract `gheese.exe`, 
 In PowerShell:
 
 ```powershell
-Invoke-WebRequest -OutFile gheese.zip https://github.com/<owner>/<repo>/releases/download/v<version>/gheese_<version>_windows_amd64.zip
+$version = (Invoke-RestMethod https://api.github.com/repos/dev-soprasteriano/gheese/releases/latest).tag_name.TrimStart("v")
+Invoke-WebRequest -OutFile gheese.zip "https://github.com/dev-soprasteriano/gheese/releases/download/v$version/gheese_${version}_windows_amd64.zip"
 Expand-Archive gheese.zip -DestinationPath .
 ```
 
