@@ -1,0 +1,18 @@
+Contributor Guidelines
+
+Thank you for contributing to gheese.
+
+Before submitting changes:
+
+- make sure your changes are relevant to the project
+- keep documentation up to date when behavior changes
+- run the project's existing checks before opening a pull request
+- sign off your commits to comply with the Developer Certificate of Origin
+
+Use:
+
+```bash
+git commit -s
+```
+
+By contributing to this repository, you agree to the terms in the [`DCO`](./DCO).

@@ -1,0 +1,14 @@
+Security Policy
+
+If you discover a severe vulnerability in this project, report it privately to:
+
+ospo.scandinavia+ghsecurity@soprasteria.com
+
+Please include:
+
+- a description of the issue
+- the affected command or component
+- steps to reproduce the problem
+- any relevant logs, output, or proof of concept
+
+Do not open a public issue for severe vulnerabilities.

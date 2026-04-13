@@ -85,8 +85,14 @@ What it does:
 
 This repository uses the **Developer Certificate of Origin (DCO)**. By contributing, you agree to the terms in [`DCO`](./DCO).
 
+General contribution guidance is available in [`CONTRIBUTOR`](./CONTRIBUTOR).
+
 Sign off commits with:
 
 ```bash
 git commit -s
 ```
+
+## Security
+
+For severe vulnerabilities, follow the reporting instructions in [`SECURITY`](./SECURITY).
