@@ -1,0 +1,5 @@
+blank_issues_enabled: false
+contact_links:
+  - name: Report a severe vulnerability
+    about: Severe vulnerabilities should be reported privately, not in a public issue.
+    url: mailto:ospo.scandinavia+ghsecurity@soprasteria.com

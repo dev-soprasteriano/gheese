@@ -1,0 +1,37 @@
+name: Question
+description: Ask a usage, behavior, or workflow question about gheese
+title: "[Question]: "
+labels:
+  - question
+body:
+  - type: textarea
+    id: question
+    attributes:
+      label: Question
+      description: What would you like to know?
+      placeholder: How do I ...?
+    validations:
+      required: true
+  - type: textarea
+    id: context
+    attributes:
+      label: Context
+      description: What are you trying to do, and what have you already tried?
+      placeholder: I am trying to ...
+  - type: input
+    id: command
+    attributes:
+      label: Related command
+      description: If your question is about a specific command, name it here.
+      placeholder: gheese repo move
+  - type: textarea
+    id: output
+    attributes:
+      label: Relevant output
+      description: Paste relevant output or errors, if any.
+      render: shell
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add anything else that would help answer the question.

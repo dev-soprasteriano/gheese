@@ -1,0 +1,40 @@
+name: Feature request
+description: Suggest a new capability or improvement for gheese
+title: "[Feature]: "
+labels:
+  - enhancement
+body:
+  - type: textarea
+    id: problem
+    attributes:
+      label: Problem or use case
+      description: What are you trying to do, and what is missing today?
+      placeholder: I want to ...
+    validations:
+      required: true
+  - type: textarea
+    id: proposal
+    attributes:
+      label: Proposed solution
+      description: Describe the behavior, command, or flag you would like to see.
+      placeholder: Add a command or flag that ...
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives considered
+      description: Have you found any workaround or alternate approach?
+  - type: textarea
+    id: examples
+    attributes:
+      label: Example usage
+      description: Show how you expect to use the feature.
+      render: shell
+      placeholder: |
+        gheese ...
+  - type: textarea
+    id: additional
+    attributes:
+      label: Additional context
+      description: Add links, prior art, or other details that would help shape the feature.
