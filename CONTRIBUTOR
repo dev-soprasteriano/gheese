@@ -9,7 +9,7 @@ Before submitting changes:
 - run the project's existing checks before opening a pull request
 - sign off your commits to comply with the Developer Certificate of Origin
 
-Use:
+Sign off commits with:
 
 ```bash
 git commit -s

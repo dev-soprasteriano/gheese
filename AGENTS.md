@@ -11,7 +11,7 @@ Guidance for AI coding assistants working in `dev-soprasteriano/gheese`. Read th
   - `repo move` uses `--Source` / `--Destination`
   - `repo move --All` accepts organization names and stays interactive
 - Keep validation close to the helper that owns it. In particular, `cmd/move.go` owns parsing and validation of `--Source` / `--Destination`.
-- Update `README.md` whenever command flags, command behavior, or installation/build steps change.
+- Update the files in `docs/` whenever command flags, command behavior, or installation/build steps change. Keep the root `README.md` aligned as a short landing page, and keep repo health files such as `CONTRIBUTOR` and `SECURITY` at the repository root.
 - Use `GITHUB_TOKEN` for authentication. Do not introduce alternate auth or config flows unless explicitly requested.
 - Prefer the Go standard library, existing internal packages, Cobra, and `go-github`. Avoid adding new third-party dependencies unless they are clearly necessary.
 - Do not edit files outside this repository unless the user explicitly asks for that.
@@ -44,6 +44,7 @@ Guidance for AI coding assistants working in `dev-soprasteriano/gheese`. Read th
   - `client.go` builds the authenticated `go-github` client from `GITHUB_TOKEN`
   - `listRepos.go` wraps repository listing, normalizes the visibility filter, and paginates through all result pages before returning
   - `transferRepo.go` handles single-repo transfers, interactive bulk transfers, and the `y/n` confirmation loop used by `repo move --All`
+- `docs/` is the source of truth for published product documentation; repo health files such as `CONTRIBUTOR` and `SECURITY` remain at the repository root
 - The command layer is intentionally thin: parse Cobra args/flags, create the client, call `internal/github`, and print results/errors
 
 ## Key conventions
