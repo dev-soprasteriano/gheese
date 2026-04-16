@@ -1,6 +1,9 @@
 # gheese
 
-`gheese` is a Go CLI from **Sopra Steria AS** for working with GitHub repositories from the command line.
+`gheese` is a Go CLI from **Sopra Steria AS** for working more efficient with GitHub from the command line.
+
+> Note: This tool is under active development. Until the release of v1 there can be major breaking changes and potential bugs in every release. Sopra Steria will not take any responsibility for any issues you could face by using this tool.
+> Note 2: Feature requests and bug reports are very welcome, but be aware that it might take time to implement/fix these.
 
 ## Requirements
 
