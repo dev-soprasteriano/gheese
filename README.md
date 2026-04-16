@@ -68,6 +68,8 @@ After extraction, move `gheese.exe` to a folder that is included in `PATH`.
 
 Lists the repositories in an organization that the authenticated user can see.
 
+The command paginates through GitHub results, so it returns all visible repositories in the organization, not just the first page.
+
 ```bash
 ./gheese repo list my-organization
 ```
@@ -118,6 +120,8 @@ What it does:
 - prompts `y/n` for each repository
 - requests a transfer for each repository you approve
 - prints how many repositories were processed and how many transfer requests were made
+
+Like `repo list`, the bulk move flow paginates through the full repository list for the source organization before prompting.
 
 ## Notes
 

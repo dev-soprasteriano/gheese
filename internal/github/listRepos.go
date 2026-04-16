@@ -16,14 +16,29 @@ func ListRepos(c *github.Client, org, visibility string) ([]*github.Repository, 
 
 	options := &github.RepositoryListByOrgOptions{
 		Type: filter,
+		ListOptions: github.ListOptions{
+			PerPage: 100,
+		},
 	}
 
-	repos, _, err := c.Repositories.ListByOrg(context.Background(), org, options)
-	if err != nil {
-		return nil, err
+	var allRepos []*github.Repository
+
+	for {
+		repos, resp, err := c.Repositories.ListByOrg(context.Background(), org, options)
+		if err != nil {
+			return nil, err
+		}
+
+		allRepos = append(allRepos, repos...)
+
+		if resp == nil || resp.NextPage == 0 {
+			break
+		}
+
+		options.Page = resp.NextPage
 	}
 
-	return repos, nil
+	return allRepos, nil
 }
 
 func normalizeVisibilityFilter(visibility string) (string, error) {
