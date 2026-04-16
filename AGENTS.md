@@ -2,6 +2,28 @@
 
 Guidance for AI coding assistants working in `dev-soprasteriano/gheese`. Read this file before making changes.
 
+## How to work in this repo
+
+- Keep changes surgical. This is a small CLI, so prefer focused edits over broad refactors.
+- Put GitHub API behavior in `internal/github`, then wire it into `cmd/`. Keep Cobra command handlers thin.
+- Preserve the current CLI contract unless the task explicitly changes it:
+  - `repo list` uses `--visibility`
+  - `repo move` uses `--Source` / `--Destination`
+  - `repo move --All` accepts organization names and stays interactive
+- Keep validation close to the helper that owns it. In particular, `cmd/move.go` owns parsing and validation of `--Source` / `--Destination`.
+- Update `README.md` whenever command flags, command behavior, or installation/build steps change.
+- Use `GITHUB_TOKEN` for authentication. Do not introduce alternate auth or config flows unless explicitly requested.
+- Prefer the Go standard library, existing internal packages, Cobra, and `go-github`. Avoid adding new third-party dependencies unless they are clearly necessary.
+- Do not edit files outside this repository unless the user explicitly asks for that.
+- Do not expose secrets in logs, output, or committed files.
+
+## Commit attribution
+
+- This repo uses DCO sign-off (`git commit -s`) for human contributors, but AI assistants must not add `Signed-off-by` trailers themselves.
+- AI assistants must not add `Co-authored-by` trailers for themselves.
+- If an AI assistant creates or prepares a commit, disclose that assistance with an `Assisted by` trailer that names the agent and model.
+- Example: `Assisted by: GitHub Copilot (GPT-5.4)`
+
 ## Build, test, and release commands
 
 - Build the CLI from the repository root with `go build -o gheese .`
@@ -26,19 +48,7 @@ Guidance for AI coding assistants working in `dev-soprasteriano/gheese`. Read th
 
 ## Key conventions
 
-- Authentication is environment-only: GitHub access always comes from `GITHUB_TOKEN`; there is no config file or alternate auth flow in the codebase
-- Add new GitHub behavior under `internal/github` first, then wire it into `cmd/`; avoid putting API logic directly in Cobra command handlers
-- Preserve the existing CLI contract unless the user explicitly wants it changed. In particular, `repo move` uses `--Source` and `--Destination`; single-repo moves expect `org/repo`, while `--All` expects plain organization names
 - Keep user-input normalization close to the API wrapper. `normalizeVisibilityFilter` in `internal/github/listRepos.go` is the existing pattern for validating/normalizing CLI values before they reach `go-github`
 - `ListRepos` is the shared repository inventory helper for both `repo list` and bulk move. If you change listing behavior, keep full pagination working for both paths
-- For `repo move`, parsing and validation of `--Source` / `--Destination` lives in `cmd/move.go`; keep that mode-aware parsing centralized instead of duplicating split/validation logic
 - `repo move --All` is interactive by design: it lists repos from the source org, prompts on stdin for each one, and only counts requested transfers, so changes to bulk move behavior must preserve that flow unless intentionally redesigning it
-- README examples are the main user-facing command documentation. Update `README.md` when flags, command behavior, or installation/build steps change
-- The repo uses DCO sign-off (`git commit -s`) for contributions
 - Releases are managed with Release Please (`release-please-config.json` and `.release-please-manifest.json`), and conventional commit types feed the generated changelog sections
-
-## Security
-
-- Keep secrets secret. Do not expose any sensitive information in logs, outputs, or any other accessible forms.
-- Do not edit files outside this repository unless the user explicitly asks for that.
-- Prefer the Go standard library, existing internal packages, Cobra, and the current `go-github` integration. Avoid adding new third-party dependencies unless they are clearly necessary.
