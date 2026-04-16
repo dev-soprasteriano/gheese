@@ -89,20 +89,16 @@ Example:
 
 ```bash
 ./gheese repo move \
-  -o source-org \
-  -r source-repo \
-  -O destination-org \
-  -R destination-repo
+  -s source-org/source-repo \
+  -d destination-org/destination-repo
 ```
 
 Useful flags:
 
 | Flag | Meaning |
 | --- | --- |
-| `-o`, `--SourceOrganization` | Source organization |
-| `-r`, `--SourceRepository` | Source repository |
-| `-O`, `--DestinationOrganization` | Destination organization |
-| `-R`, `--DestinationRepository` | Repository name after transfer |
+| `-s`, `--Source` | Source repository in `org/repo` form |
+| `-d`, `--Destination` | Destination repository in `org/repo` form |
 | `-t`, `--TeamId` | Team IDs to add to the repository |
 
 ### `repo move --All`
@@ -111,8 +107,8 @@ Walks through all repositories in a source organization and asks for confirmatio
 
 ```bash
 ./gheese repo move \
-  -o source-org \
-  -O destination-org \
+  -s source-org \
+  -d destination-org \
   -A
 ```
 
