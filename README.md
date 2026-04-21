@@ -1,6 +1,6 @@
 # gheese
 
-`gheese` is a Go CLI from **Sopra Steria AS** for working more efficient with GitHub from the command line.
+`gheese` is a Go CLI from **Sopra Steria AS** for working more efficient with GitHub repositories and user access from the command line.
 
 Project documentation now lives in [`docs/`](./docs/index.md).
 

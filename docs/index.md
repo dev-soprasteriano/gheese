@@ -4,7 +4,7 @@ title: gheese
 
 # gheese
 
-`gheese` is a Go CLI from **Sopra Steria AS** for working more efficient with GitHub from the command line.
+`gheese` is a Go CLI from **Sopra Steria AS** for working more efficient with GitHub repositories and user access from the command line.
 
 > Note: This tool is under active development. Until the release of v1 there can be major breaking changes and potential bugs in every release. Sopra Steria will not take any responsibility for any issues you could face by using this tool.
 > Note 2: Feature requests and bug reports are very welcome, but be aware that it might take time to implement/fix these.
@@ -76,6 +76,76 @@ After extraction, move `gheese.exe` to a folder that is included in `PATH`.
 
 ## Commands
 
+### `user add`
+
+Invites a user to one or more organizations and queues the requested team assignments on those invitations.
+
+If you only know the user's email address, `user add` can create the organization invitations without `--login`.
+
+Simple flag-driven example:
+
+```bash
+./gheese user add \
+  --enterprise my-enterprise \
+  --email octocat@example.com \
+  --org platform \
+  --team platform/core
+```
+
+Useful flags:
+
+| Flag | Meaning |
+| --- | --- |
+| `--enterprise` | Enterprise slug that owns the cost center |
+| `--login` | GitHub login for the user to invite |
+| `--email` | Email address for the user. `user add` can use this without `--login` |
+| `--org` | Target organization, repeatable |
+| `--team` | Team in `org/team-slug` form, repeatable |
+| `--role` | Invitation role: `direct_member`, `admin`, or `billing_manager` |
+| `--file` | Path to a JSON request file |
+| `--dry-run` | Validate and report actions without changing GitHub |
+| `--output` | Output format: `text` or `json` |
+
+Use a JSON file for automation:
+
+```bash
+./gheese user add --file onboarding-request.json --output json
+```
+
+Example request file:
+
+```json
+{
+  "enterprise": "my-enterprise",
+  "email": "octocat@example.com",
+  "organizations": [
+    {
+      "name": "platform",
+      "teams": ["core", "developers"]
+    },
+    {
+      "name": "data",
+      "teams": ["analysts"]
+    }
+  ]
+}
+```
+
+### `user update`
+
+Reconciles an existing user back to the requested state for organization membership, team membership, and cost center assignment. This command is designed for recurring workflows.
+
+`user update` requires the user's GitHub login and cost center so it can verify membership, ensure team membership, and assign the cost center resource after invitation acceptance.
+
+```bash
+./gheese user update \
+  --enterprise my-enterprise \
+  --login octocat \
+  --cost-center Engineering \
+  --org platform \
+  --team platform/core
+```
+
 ### `repo list`
 
 Lists the repositories in an organization that the authenticated user can see.
@@ -139,6 +209,7 @@ Like `repo list`, the bulk move flow paginates through the full repository list 
 
 - The tool only works against repositories visible to the authenticated user.
 - Repository transfers depend on the permissions and rules enforced by GitHub.
+- `user add` requires organization-level invitation permissions. `user update` additionally requires enterprise billing permissions for cost center assignment. The default GitHub Actions token is not sufficient for these commands.
 - Releases are built for macOS, Linux, and Windows through GitHub Actions.
 
 ## Contributing
