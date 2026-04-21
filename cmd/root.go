@@ -13,9 +13,9 @@ import (
 
 var rootCmd = &cobra.Command{
 	Use:   "gheese",
-	Short: "Manage GitHub repositories from the command line.",
-	Long: `gheese is a CLI from Sopra Steria AS for listing and transferring
-GitHub repositories using the credentials provided through GITHUB_TOKEN.`,
+	Short: "Manage GitHub resources from the command line.",
+	Long: `gheese is a CLI from Sopra Steria AS for managing GitHub repositories
+and user access using the credentials provided through GITHUB_TOKEN.`,
 }
 
 // Execute adds all child commands to the root command and sets flags appropriately.
